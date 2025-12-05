@@ -41,3 +41,7 @@ health-analyzer-frontend/.vite/
 
 # Misc
 .DS_Store
+
+__pycache__/
+*.pyc
+backend/__pycache__/
