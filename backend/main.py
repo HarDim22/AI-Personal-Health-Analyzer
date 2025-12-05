@@ -3,17 +3,20 @@ import io
 
 import json
 import os
-
+import uuid
 from uuid import uuid4
 from datetime import datetime
 
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse,FileResponse
 from pydantic import BaseModel
-
+from pathlib import Path
 from health_rules import analyze_labs  # health_rules.py must be in same folder
 
+# === Paths
+BASE_DIR = Path(__file__).parent
+HISTORY_FILE = BASE_DIR / "history.json"
 
 app = FastAPI(
     title="AI Personal Health Analyzer",
@@ -24,11 +27,12 @@ app = FastAPI(
 origins = [
     "http://localhost:5174",
     "http://127.0.0.1:5174",
+    # "https://front.vercel.app",
 ]
 # DEV: allow all origins so React on any localhost port can access
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -46,24 +50,20 @@ class LabInput(BaseModel):
 class SaveRequest(LabInput):
     label: Optional[str] = None  
 
-HISTORY_FILE = "history.json"
-
 
 def load_history():
     """Load saved lab analyses from a JSON file."""
-    if not os.path.exists(HISTORY_FILE):
+    if not HISTORY_FILE.exists:
         return []
     try:
-        with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+         return json.loads(HISTORY_FILE.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         return []
 
 
 def save_history(entries):
     """Save the list of analyses to the JSON file."""
-    with open(HISTORY_FILE, "w", encoding="utf-8") as f:
-        json.dump(entries, f, ensure_ascii=False, indent=2)
+    HISTORY_FILE.write_text(json.dumps(entries, ensure_ascii=False, indent=2), encoding="utf-8")
 
 def build_ai_like_summary(analysis: Dict) -> Dict:
     """
