@@ -22,3 +22,22 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Python
+backend/__pycache__/
+backend/*.pyc
+
+# Virtual environments
+venv/
+env/
+
+# FastAPI cache
+backend/.pytest_cache/
+
+# Node
+health-analyzer-frontend/node_modules/
+health-analyzer-frontend/dist/
+health-analyzer-frontend/.vite/
+
+# Misc
+.DS_Store
