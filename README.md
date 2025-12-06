@@ -1,199 +1,152 @@
-🌿 MyLab Insight
-AI-Assisted Personal Health Analyzer (React + FastAPI)
+---
+title: MyLab Insight – AI Personal Health Analyzer
+emoji: 🌿
+colorFrom: indigo
+colorTo: blue
+sdk: fastapi
+sdk_version: "0.110.0"
+app_file: main.py
+pinned: false
+---
 
-MyLab Insight is a full-stack health analysis application that helps users interpret common lab results, track historical trends, and receive AI-style educational explanations.
+# 🌿 MyLab Insight  
+**AI-Assisted Personal Health Analyzer (React + FastAPI)**
 
-It combines a modern React frontend, a FastAPI backend, rule-based interpretation engine, and PDF report generation.
+MyLab Insight is a **full-stack health analysis application** that helps users interpret common lab results, track historical trends, and receive AI-style educational explanations.
 
-🧑‍⚕️ Not medical advice — educational only.
+It combines a modern **React frontend**, a **FastAPI backend**, a **rule-based interpretation engine**, and **PDF report generation**.
 
-🚀 Demo (Local Development)
+🧑‍⚕️ **Not medical advice — educational use only.**
 
-Frontend → http://localhost:5174
-Backend → http://localhost:8000
+---
 
-📌 Features
-🔬 Lab Result Interpretation
+## 🚀 Live Demo
 
-Glucose fasting range evaluation
+- **Backend API (Hugging Face Space):**  
+  👉 https://hardim22-ai-personal-health-analyzer.hf.space
 
-HbA1c classification
+- **Frontend (Vercel):**  
+  👉 https://ai-personal-health-analyzer.vercel.app/
 
-LDL / HDL / Total cholesterol analysis
+---
 
-Triglycerides interpretation
+## 📌 Features
 
-Overall risk score
+### 🔬 Lab Result Interpretation
+- Glucose fasting range evaluation  
+- HbA1c classification  
+- LDL / HDL / Total cholesterol analysis  
+- Triglycerides interpretation  
+- Overall health risk score  
 
-🧠 AI-Style Explanation Engine
+### 🧠 AI-Style Explanation Engine
+- Human-readable summaries  
+- Lifestyle suggestions  
+- Highlighted abnormalities  
+- **Fully deterministic** (rule-based, no ML, no hallucinations)
 
-Generates human-like summaries
+### 📊 Trend Visualization
+- Glucose trends over time (Recharts)  
+- Stored lab history (JSON-based)
 
-Provides lifestyle suggestions
+### 📄 PDF Report Generation
+- Clean formatted PDF output  
+- Includes values, references & explanations
 
-Highlights key abnormalities
+### 💻 Modern Frontend (React + Vite)
+- Responsive UI  
+- Form validation  
+- Simple, clean design  
+- Environment-based API configuration
 
-Fully deterministic (rule-based, no ML)
+### 🧱 FastAPI Backend
+- Clean REST architecture  
+- Deployed on **Hugging Face Spaces**  
+- CORS configured for frontend integration
 
-📊 Trend Visualization
+---
 
-Glucose chart over time (Recharts)
+## 🏗 Architecture Overview
 
-Stored lab history (JSON-based)
+┌──────────────────────────┐
+│ React UI │
+│ (Vite + Recharts) │
+└───────────┬──────────────┘
+│ REST API
+▼
+┌──────────────────────────┐
+│ FastAPI Backend │
+├──────────────────────────┤
+│ analyze-labs │
+│ save-result │
+│ ai-summary │
+│ generate-report (PDF) │
+└───────────┬──────────────┘
+│
+▼
+┌──────────────────────────┐
+│ history.json storage │
+└──────────────────────────┘
 
-📄 PDF Report Generation
 
-Clean formatted PDF file
+---
 
-Includes all lab values and interpretation
+## 📁 Project Structure
 
-💻 Modern Frontend (React + Vite)
-
-Responsive UI
-
-Form validation
-
-Light & simple design
-
-Environment-based API URL
-
-🧱 FastAPI Backend
-
-Clean REST architecture
-
-CORS configured for Vercel / local dev
-
-🏗 Architecture Overview
-                    ┌──────────────────────────┐
-                    │        React UI          │
-                    │  (Vite Frontend)         │
-                    └───────────┬──────────────┘
-                                │ REST API
-                                ▼
-                    ┌──────────────────────────┐
-                    │      FastAPI Backend     │
-                    ├──────────────────────────┤
-                    │ analyze-labs             │
-                    │ save-result              │
-                    │ ai-summary               │
-                    │ generate-report (PDF)    │
-                    └───────────┬──────────────┘
-                                │
-                                ▼
-                    ┌──────────────────────────┐
-                    │   history.json storage   │
-                    └──────────────────────────┘
-
-📁 Project Structure
 AI-Personal-Health-Analyzer/
 │
-├── backend/
-│   ├── main.py
-│   ├── health_rules.py
-│   ├── history.json
-│   ├── requirements.txt
-│ │
-├── health-analyzer-frontend/
-│   ├── src/
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── App.css
-│   ├── index.html
-│   └── package.json
+├── backend/ # Hugging Face Space
+│ ├── main.py
+│ ├── health_rules.py
+│ ├── history.json
+│ ├── requirements.txt
+│ └── README.md
 │
-└── README.md           
-
-⚙️ Backend Setup (FastAPI)
-1️⃣ Install dependencies
-cd backend
-python -m venv venv
-venv\Scripts\activate      # Windows
-# ή
-source venv/bin/activate   # Mac/Linux
-
-pip install -r requirements.txt
-
-2️⃣ Run server
-uvicorn main:app --reload
+├── health-analyzer-frontend/ # Vercel deployment
+│ ├── src/
+│ │ ├── App.jsx
+│ │ ├── main.jsx
+│ │ └── App.css
+│ ├── index.html
+│ └── package.json
+│
+└── README.md
 
 
-Backend runs at:
+---
 
-http://localhost:8000
+## 🔌 Backend API Endpoints
 
-🔌 Backend API Endpoints
-POST /analyze-labs
+| Method | Endpoint | Description |
+|------|---------|-------------|
+| POST | `/analyze-labs` | Analyze lab values |
+| POST | `/save-result` | Analyze + store entry |
+| GET  | `/history` | Retrieve saved analyses |
+| POST | `/ai-summary` | AI-style explanation |
+| GET  | `/generate-report` | Download PDF report |
 
-Analyze lab values.
+---
 
-POST /save-result
+## 🌍 Environment Variables (Frontend)
 
-Analyze + store entry in history.
+Create `.env.local` in the frontend project:
 
-GET /history
+```env
+VITE_API_BASE_URL=https://hardim22-ai-personal-health-analyzer.hf.space
+Used automatically by Vercel during deployment.
 
-Return sorted history list.
+⚠️ Disclaimer
 
-POST /ai-summary
+This application does not provide medical advice or diagnosis.
+All outputs are educational only and must be interpreted by a qualified healthcare professional.
 
-Return AI-style explanation based on lab values.
+🧭 What I Learned (Key Portfolio Value)
 
-GET /generate-report
-
-Returns a PDF with analysis.
-
-🖥 Frontend Setup (React + Vite)
-1️⃣ Install dependencies
-cd health-analyzer-frontend
-npm install
-
-2️⃣ Start development server
-npm run dev -- --port 5174
-
-
-Frontend at:
-
-http://localhost:5174
-
-🌍 Environment Variables
-
-Create a .env.local in the frontend:
-
-VITE_API_BASE_URL=http://localhost:8000
-
-
-For production (Vercel):
-
-VITE_API_BASE_URL=https://your-backend-host.com
-
-📦 Deployment
-🔵 Frontend → Vercel
-
-Select the frontend folder
-
-Framework should auto-detect Vite
-
-Add env variable VITE_API_BASE_URL
-
-🔵 Backend → Railway / Fly.io / Deta Space
-
-
-Start command:
-
-uvicorn main:app --host 0.0.0.0 --port $PORT
-
-
-Don’t forget to update allowed CORS origins.
-
-
-
-🧭 What I Learned (Strong Portfolio Section)
-
-This project allowed me to practice and strengthen:
+This project helped me strengthen skills in:
 
 Full-stack development (React + FastAPI)
 
-REST API design
+REST API design & integration
 
 Rule-based reasoning systems
 
@@ -205,14 +158,15 @@ Data visualization with Recharts
 
 CORS configuration & environment variables
 
-Clean project structure and GitHub workflow
+GitHub workflow & clean project structure
 
-Building deployable real-world apps
-
+Deploying real-world applications (Hugging Face + Vercel)
 
 👤 Author
+
 Dimitra Charizani
 Applied Informatics — University of Macedonia
 
-🔗 LinkedIn: https://linkedin.com/in/dimitra-charizani
 🔗 GitHub: https://github.com/HarDim22
+
+🔗 LinkedIn: https://linkedin.com/in/dimitra-charizani
